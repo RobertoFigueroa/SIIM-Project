@@ -131,3 +131,4 @@ dmypy.json
 #data
 /train.zip
 /train.zip.part
+/train
