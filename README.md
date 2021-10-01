@@ -5,7 +5,7 @@ This is a project for CC3066 course.
 ### Prerequisites
 
 ```
-conda create -n venv python=3.6
+conda create -n venv python=3.8
 ```
 
 Then
