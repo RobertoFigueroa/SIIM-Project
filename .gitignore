@@ -139,3 +139,20 @@ dmypy.json
 /model.h5
 /brucechou1983_CheXNet_Keras_0.3.0_weights.h5.zip
 
+
+# Models
+/models/yolov5/data
+/models/yolov5/dataset
+/models/yolov5/models
+/models/yolov5/runs
+/models/yolov5/utils
+/models/yolov5/yolov5-data
+/models/yolov5/yolov5
+/models/yolov5/Dockerfile
+/models/yolov5/CONTRIBUTING.md
+/models/yolov5/README.md
+/models/yolov5/LICENSE
+/models/yolov5/setup.cfg
+/models/yolov5/tutorial.ipynb
+/models/yolov5/yolov5x.pt
+*.cache
