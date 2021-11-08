@@ -1,0 +1,7 @@
+
+train: ./autosplit_train.txt
+val: ./autosplit_val.txt
+
+nc: 4
+names: ['Negative for Pneumonia', 'Typical Appearance',
+        'Indeterminate Appearance', 'Atypical Appearance']
