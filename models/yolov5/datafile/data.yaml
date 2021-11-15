@@ -1,6 +1,6 @@
 
-train: ./autosplit_train.txt
-val: ./autosplit_val.txt
+train: ./dataset/autosplit_train.txt
+val: ./dataset/autosplit_val.txt
 
 nc: 4
 names: ['Negative for Pneumonia', 'Typical Appearance',
