@@ -164,3 +164,7 @@ dmypy.json
 /models/yolov5/tutorial.ipynb
 /models/yolov5/yolov5x.pt
 *.cache
+
+# Vanilla CNN
+/models/cnn/train-512-png
+
