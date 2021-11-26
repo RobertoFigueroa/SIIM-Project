@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid-19 - Detect & Predict</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use computer vision to detect and localize COVID-19 on chest x-rays.">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!--Link to Font Awesome icons-->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.4.2/css/all.css'
+        integrity='sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns' crossorigin='anonymous'>
+
+    <!--Link to fonts from google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Outfit&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+    <style>
+        html,
+        body,
+        h2,
+        h3,
+        h4,
+        p,
+        h5,
+        li {
+            font-family: Outfit, sans-serif
+        }
+    </style>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Covid-19 Detect & Predict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="model.html">About the model</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="w3-content" style="max-width:1500px">
+        <div class="w3-animate-opacity mt-4">
+            <!-- 960 width region -->
+            <div class='w3-content w3-round w3-center' style="max-width:960px">
+                <!-- This image will be replaced once the js code runs. -->
+                <div class="w3-padding-bottom w3-center unblock">
+
+                    <div class="w3-margin-right w3-margin-left">
+
+                        <img id="selected-image" class="w3-round adjust-image unblock" src="assets/bbox.jpg"
+                            height="450" alt="Image for analysis">
+                    </div>
+
+                    <div id="btnn" class="w3-center w3-margin-top">
+                        <button
+                            class="btn btn-primary"
+                            onclick="setTimeout(simulateClick.bind(null, 'image-selector'), 200)"><i
+                                class='fas fa-camera w3-padding-right' style='font-size:15px'></i>
+                            <b>Submit Image</b></button>
+
+                        <button
+                            class="btn active-button btn btn-success ml-4"
+                            onclick="setTimeout(simulateClick.bind(null, 'predict-button'), 200)">
+                            <b>Predict</b></button>
+
+                    </div>
+                </div>
+                <div class="w3-center w3-round text-color space-letters dont-break-out unblock set-alignment results-box dark-color bottom-margin">
+                    <div class="">
+                        <div class="w3-container w3-blue" style="height:10px; width:100%"></div>
+                    </div>
+
+                    <div class="flex" style="height:100%;">    
+                        <h2 class="w3-text-blue results-text mt-4">Results</h2>
+    
+                        <p class="w3-text-black spin-text"><span class="progress-spinner w3-text-blue"><i
+                                    class='far fa-life-ring fa-spin' style='font-size:24px'></i></span></p>
+
+                        <p class="static-spinner spin-text w3-text-blue"><i class='far fa-life-ring'
+                                style='font-size:24px'></i></p>
+    
+                        <p class='w3-text-sand space-letters w3-padding-top preds-text' id="count-prediction">---</p>
+    
+                        <p class="w3-text-white space-letters message-text" id="file-name">Please submit a valid .jpg or .png image,<br> 
+                            then click <strong class="w3-text-blue">Predict.</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hide">
+            <button id='predict-button'>Predict</button>
+        </div>
+
+
+
+        <div class="hide">
+            <input id="image-selector" type="file">
+        </div>
+
+        <!-- Load jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+
+        </script>
+
+        <script>
+            $('.progress-spinner').hide();
+            $('.active-button').hide();
+
+            function simulateClick(tabID) {
+
+                document.getElementById(tabID).click();
+            }
+
+            var predictURL = 'http://localhost:5000/predict';
+            let base64Image;
+
+            $("#image-selector").change(function () {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    let dataURL = reader.result;
+                    $('.active-button').show();
+                    $('.passive-button').hide();
+
+                    // Display the image the user has submitted on the web page.
+                    $('#selected-image').attr("src", dataURL);
+
+                    // Form handler.
+                    dataURL = dataURL.replace("data:image/jpg;base64,", "");
+                    dataURL = dataURL.replace("data:image/jpeg;base64,", "");
+                    dataURL = dataURL.replace("data:image/png;base64,", "");
+
+                    base64Image = dataURL;
+                }
+
+                // Read the image
+                reader.readAsDataURL($("#image-selector")[0].files[0]);
+
+                // Get the image file name
+                fname = $("#image-selector")[0].files[0].name;
+
+                // Clear the previous prediction.
+                $("#count-prediction").text("");
+
+                $("#file-name").text(fname);
+
+            });
+
+
+            // This executes when the user clicks the predict button.
+            $("#predict-button").click(function () {
+                $('.progress-spinner').show();
+                $('.explain-text').hide();
+                $('.static-spinner').hide();
+
+                // Display the image file name of the image that the user submitted.
+                $("#file-name").text(fname);
+
+                let message = {
+                    image: base64Image,
+                    image_fname: fname
+                }
+
+                // Send the image to the server and receive the response.
+                $.post(predictURL, JSON.stringify(message), function (response) {
+
+                    // Receive the response (prediction) from the server. 
+                    $("#count-prediction").text(response.prediction.pred_class);
+
+                    // This part of the image string was removed
+                    // before the image was sent to the app server.
+                    let str1 = "data:image/jpeg;base64,";
+
+                    // Get the model output image as a string.
+                    let str2 = response.prediction.image;
+                    let fname1 = response.prediction.image_fname;
+
+                    // Concat both strings
+                    let returned_image = str1.concat(str2);
+
+                    // Display the model output image on the web page.
+                    $('#selected-image').attr("src", returned_image);
+
+                    // Display the image file name that
+                    $("#file-name").text(fname1);
+
+                    // Hide the spinner.
+                    $('.progress-spinner').hide();
+                    $('.static-spinner').show();
+
+                    $('.active-button').hide();
+                    $('.passive-button').show();
+
+                    console.log(response);
+                });
+            });
+
+        </script>
+    </div>
+</body>
+
+</html>

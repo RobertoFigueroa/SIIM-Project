@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Covid-19 - Detect & Predict</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Use computer vision to detect and localize COVID-19 on chest x-rays.">
+    <link rel="stylesheet" href="css/w3.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!--Link to Font Awesome icons-->
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.4.2/css/all.css'
+        integrity='sha384-/rXc/GQVaYpyDdyxK+ecHPVYJSN9bmVFBvjA/9eOB+pb3F2w2N6fc5qB9Ew5yIns' crossorigin='anonymous'>
+
+    <!--Link to fonts from google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Outfit&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+    <style>
+        html,
+        body,
+        h2,
+        h3,
+        h4,
+        p,
+        h5,
+        li {
+            font-family: Outfit, sans-serif
+        }
+    </style>
+</head>
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">Covid-19 Detect & Predict</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02"
+                aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home
+                            <span class="visually-hidden">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">About the model</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+
+    </div>
+    <div class='p-4 w3-round space-letters w3-margin-bottom'>
+
+        <h2 class='w3-text-blue'>Model: Yolov5x</h2>
+
+        <p>We used <a href="https://github.com/ultralytics/yolov5" target='_blank'
+            class="w3-text-blue">Yolov5</a> model using data from the Kaggle
+            <a href="https://www.kaggle.com/c/siim-covid19-detection/data" target='_blank'
+                class="w3-text-blue">SIIM-FISABIO-RSNA COVID-19 Detection</a> competition.
+        </p>
+
+        <div class='w3-small'>
+
+            <p>Model Name: exp240-best.pt<br>
+                Status: Stable Training</p>
+
+        </div>
+
+        <hr>
+
+
+        <h4 class='w3-text-blue mt-4'><b>Purpose</b></h4>
+
+        <p>This main purpose of this app is to detect and localize COVID-19 on chest x-rays. It classifies each image
+            into one of two classes:<br>
+            - Negative for pneumonia<br>
+            - Typical for COVID-19</p>
+
+
+
+        <h4 class='w3-text-blue topp-margin'><b>Input</b></h4>
+
+        <p>JPG or PNG images (No DICOM or TIFF, unsupported).</p>
+
+        <h4 class='w3-text-blue topp-margin'><b>Output</b></h4>
+
+        <p> Two predicted classes - Negative for pneumonia or Typical for COVID-19. When the app
+            predicts 'Typical for COVID-19', it also draws bounding boxes around areas where it detected opacity.</p>
+
+        <h4 class='w3-text-blue topp-margin'><b>Dataset Summary</b></h4>
+
+        <p>The original dataset has four classes:<br>
+            - negative for pneumonia<br>
+            - typical, atypical and indeterminate for COVID-19</p>
+
+        <div class='w3-small'>
+            <p>Source image format: Dicom<br>
+                Training image format: jpeg<br>
+                Total images: 6334</p>
+
+            <p>Num patients: 3261<br>
+                Num female patients: 1624<br>
+                Num male patients: 1637<br>
+                Num female images: 2770<br>
+                Num male images: 3564</p>
+
+            <p>Min patient age: No info<br>
+                Max patient age: No info<br>
+                Patient ethnicity: No info</p>
+        </div>
+
+
+        <h4 class='w3-text-blue topp-margin'><b>Validation Performance (Yolov5 Results of Experiment 240)</b></h4>
+
+
+
+        <p class="w3-small">Confusion Matrix</p>
+
+        <div>
+
+            <img class="w3-round" src="assets/exp240-confusion-matrix.png" width="28%" alt="Confusion matrix">
+
+        </div>
+
+
+        <p class="w3-small">Metrics Report</p>
+
+        <div>
+
+            <img class="w3-round" src="assets/exp240-results.png" width="28%" alt="Metrics report">
+
+        </div>
+
+        <hr>
+
+        <p>Recommended: use more image augmentation during training, it will help the model to generalize.</p>
+
+
+    </div>
+    <!-- End of block -->
+
+</body>
+
+</html>

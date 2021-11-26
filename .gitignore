@@ -168,3 +168,21 @@ dmypy.json
 # Vanilla CNN
 /models/cnn/train-512-png
 
+
+# Web App
+/app/data
+/app/models
+/app/runs
+/app/utils
+/app/yolov5-data
+/app/yolov5
+/app/Dockerfile
+/app/CONTRIBUTING.md
+/app/README.md
+/app/LICENSE
+/app/setup.cfg
+/app/tutorial.ipynb
+/app/yolov5x.pt
+*.pt
+*.cache
+
