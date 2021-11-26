@@ -32,7 +32,7 @@ conda install -c conda-forge gdcm -y
 
 The selected model to develop an "Analyzer & Covid-19 Predictor" was Yolov5x, instead of our other two models: CNN with CheXNet weights and Vanilla CNN. This is due the good metrics obtained after several trains. This app is under the `app` folder, made with Flask. 
 
-1. When we were training Yolov5 model, it generated a **weights** file under /models/yolov5/runs/train/experimentXXXX folder. You need to check your best experiment based on its metrics.
+1. When we were training Yolov5 model, it generated a **weights** file under /models/yolov5/runs/train/experimentXXXX folder. You need to check your best experiment based on its metrics. You can find our weights file [here](https://www.dropbox.com/s/zarnhll0ien3jk9/exp240-best.zip?dl=0) 
 
 2. Copy the weights under `app` folder and update its references on Flask code.
 
